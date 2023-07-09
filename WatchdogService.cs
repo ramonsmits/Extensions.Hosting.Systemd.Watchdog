@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 class WatchdogService : IHostedService, IDisposable
 {
-    static readonly ServiceState WatchDogState = new ServiceState("WATCHDOG=1");
+    static readonly ServiceState WatchDogState = new("WATCHDOG=1");
     readonly ISystemdNotifier SystemdNotifier;
     readonly IHealthCheck[] HealthChecks;
     readonly Timer watchdogTimer;
@@ -24,8 +24,8 @@ class WatchdogService : IHostedService, IDisposable
         HealthChecks = healthChecks.ToArray();
         SystemdNotifier = systemdNotifier;
 
-        if (HealthChecks.Length==0) throw new InvalidOperationException($"Atleast one `{nameof(IHealthCheck)}` needs to be registered.");
-        
+        if (HealthChecks.Length == 0) throw new InvalidOperationException($"Atleast one `{nameof(IHealthCheck)}` needs to be registered.");
+
         var WATCHDOG_USEC = Environment.GetEnvironmentVariable("WATCHDOG_USEC");
 
         Logger.LogDebug("WATCHDOG_USEC={0}", WATCHDOG_USEC);
@@ -55,7 +55,7 @@ class WatchdogService : IHostedService, IDisposable
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        watchdogTimer?.Change(-1, -1);
+        watchdogTimer?.Change(Timeout.Infinite, Timeout.Infinite);
         return Task.CompletedTask;
     }
 
