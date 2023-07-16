@@ -2,31 +2,31 @@
 
   <PropertyGroup>
     <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-    <IsPublishable>false</IsPublishable>
-
-
-    <PackageId>Extensions.Hosting.Systemd.Watchdog</PackageId>
-    <Company>https://github.com/ramonsmits</Company>
-    <Authors>ramonsmits</Authors>
-    <Copyright>Copyright (c) Ramon Smits 2023</Copyright>
-    <Description>Systemd watchdog support</Description>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog/tree/$(PackageVersion)</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <IncludeSource>True</IncludeSource>
-    <RepositoryUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog</RepositoryUrl>
-    <LangVersion>latest</LangVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <IsPublishable>false</IsPublishable>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>ramonsmits</Authors>
+    <Company>https://github.com/ramonsmits</Company>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Copyright>Copyright (c) Ramon Smits 2023</Copyright>
+    <Description>Systemd watchdog support</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IsPublishable>false</IsPublishable>
+    <PackageId>Extensions.Hosting.Systemd.Watchdog</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog/tree/$(PackageVersion)</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
