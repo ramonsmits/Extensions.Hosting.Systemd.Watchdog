@@ -1,0 +1,15 @@
+﻿[Unit]
+Description=Watchdog Demo
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/home/pi/src/wddemo/
+#Type=forking
+ExecStart=/home/pi/src/wddemo/wddemo
+#KillMode=process
+WatchdogSec=1s
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
