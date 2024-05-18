@@ -8,7 +8,7 @@
     <PackageId>Extensions.Hosting.Systemd.Watchdog</PackageId>
     <Company>https://github.com/ramonsmits</Company>
     <Authors>ramonsmits</Authors>
-    <Copyright>Copyright (c) Ramon Smits 2023</Copyright>
+    <Copyright>Copyright (c) Ramon Smits 2024</Copyright>
     <Description>Systemd watchdog support</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
