@@ -35,12 +35,14 @@ namespace Microsoft.Extensions.Hosting
             return hostBuilder;
         }
 
+#if NET8_0_OR_GREATER
         public static IHostApplicationBuilder UseSystemd(this IHostApplicationBuilder hostBuilder, bool enableWatchdog = true)
         {
             hostBuilder.UseSystemd();
             hostBuilder.Services.AddSystemd(enableWatchdog);
             return hostBuilder;
         }
+#endif
 
         public static IServiceCollection AddSystemd(this IServiceCollection services, bool enableWatchdog)
         {
