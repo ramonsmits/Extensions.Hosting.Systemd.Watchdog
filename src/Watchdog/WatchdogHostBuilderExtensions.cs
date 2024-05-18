@@ -31,37 +31,46 @@ namespace Microsoft.Extensions.Hosting
         public static IHostBuilder UseSystemd(this IHostBuilder hostBuilder, bool enableWatchdog = true)
         {
             hostBuilder.UseSystemd();
-            hostBuilder.ConfigureServices(services =>
+            hostBuilder.ConfigureServices(services => services.AddSystemd(enableWatchdog));
+            return hostBuilder;
+        }
+
+        public static IHostApplicationBuilder UseSystemd(this IHostApplicationBuilder hostBuilder, bool enableWatchdog = true)
+        {
+            hostBuilder.UseSystemd();
+            hostBuilder.Services.AddSystemd(enableWatchdog);
+            return hostBuilder;
+        }
+
+        public static IServiceCollection AddSystemd(this IServiceCollection services, bool enableWatchdog)
+        {
+            var isSystemdService = SystemdHelpers.IsSystemdService();
+            var isSystemdChildService = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NOTIFY_SOCKET")) || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LISTEN_PID"));
+
+            using (var scope = services.BuildServiceProvider().CreateScope())
             {
-                var isSystemdService = SystemdHelpers.IsSystemdService();
-                var isSystemdChildService = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NOTIFY_SOCKET")) || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LISTEN_PID"));
+                var logger = scope.ServiceProvider.GetService<ILogger<WatchdogService>>();
+                logger?.LogInformation("UseSystemd {IsSystemdService} {EnableWatchdog} {IsSystemdChildService}", isSystemdService, enableWatchdog, isSystemdChildService);
+            }
 
-                using (var scope = services.BuildServiceProvider().CreateScope())
+            if (enableWatchdog)
+            {
+
+                if (!isSystemdService && isSystemdChildService)
                 {
-                    var logger = scope.ServiceProvider.GetService<ILogger<WatchdogService>>();
-                    logger?.LogInformation("UseSystemd {IsSystemdService} {EnableWatchdog} {IsSystemdChildService}", isSystemdService, enableWatchdog, isSystemdChildService);
+                    // Workaround when process isn't main process but service child process
+                    // See https://source.dot.net/#Microsoft.Extensions.Hosting.Systemd/SystemdNotifier.cs
+                    services.AddSingleton<ISystemdNotifier, SystemdNotifier>();
+                    // See https://source.dot.net/#Microsoft.Extensions.Hosting.Systemd/SystemdLifetime.cs
+                    services.AddSingleton<IHostLifetime, SystemdLifetime>();
                 }
 
-                if (enableWatchdog)
+                if (isSystemdService || isSystemdChildService)
                 {
-
-                    if (!isSystemdService && isSystemdChildService)
-                    {
-                        // Workaround when process isn't main process but service child process
-                        // See https://source.dot.net/#Microsoft.Extensions.Hosting.Systemd/SystemdNotifier.cs
-                        services.AddSingleton<ISystemdNotifier, SystemdNotifier>();
-                        // See https://source.dot.net/#Microsoft.Extensions.Hosting.Systemd/SystemdLifetime.cs
-                        services.AddSingleton<IHostLifetime, SystemdLifetime>();
-                    }
-
-                    if (isSystemdService || isSystemdChildService)
-                    {
-                        services.AddHostedService<WatchdogService>();
-                    }
+                    services.AddHostedService<WatchdogService>();
                 }
-
-                return hostBuilder;
-            });
+            }
+            return services;
         }
     }
 }
