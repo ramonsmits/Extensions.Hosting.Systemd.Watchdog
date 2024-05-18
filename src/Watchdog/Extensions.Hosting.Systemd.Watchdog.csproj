@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="7.0.0" Condition="'$(TargetFramework)' == 'net7.0'" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" Condition="'$(TargetFramework)' == 'net6.0'" />
 
-    <PackageReference Include="MinVer" Version="4.3.0">
+    <PackageReference Include="MinVer" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
