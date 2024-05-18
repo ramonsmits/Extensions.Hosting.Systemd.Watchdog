@@ -21,6 +21,14 @@ var host = new HostBuilder()
     })
 ```
 
+or when using the .net 8 `HostApplicationBuilder`:
+
+```c#
+var builder = Host.CreateApplicationBuilder(args);
+builder.UseSystemd(enableWatchdog: true);
+builder.Services.AddSingleton<IHealthCheck>(new SignalHealthCheck(TimeSpan.FromMinutes(5));
+```
+
 ### Register health checks
 
 The watchdog needs an implementation for `IHeathCheck` and the results of its `IsHealhty` property is used to notify the state to systemd. Register at least 1 `IHealthCheck` implementation. The watchdog routing will probe all registered implementations.
