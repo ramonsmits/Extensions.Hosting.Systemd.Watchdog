@@ -12,7 +12,7 @@
     <Description>Systemd watchdog support</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog/tree/$(PackageVersion)</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/ramonsmits/Extensions.Hosting.Systemd.Watchdog</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
