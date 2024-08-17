@@ -38,7 +38,6 @@ namespace Microsoft.Extensions.Hosting
 #if NET8_0_OR_GREATER
         public static IHostApplicationBuilder UseSystemd(this IHostApplicationBuilder hostBuilder, bool enableWatchdog = true)
         {
-            hostBuilder.UseSystemd();
             hostBuilder.Services.AddSystemd(enableWatchdog);
             return hostBuilder;
         }
@@ -46,6 +45,7 @@ namespace Microsoft.Extensions.Hosting
 
         public static IServiceCollection AddSystemd(this IServiceCollection services, bool enableWatchdog)
         {
+            SystemdHostBuilderExtensions.AddSystemd(services);
             var isSystemdService = SystemdHelpers.IsSystemdService();
             var isSystemdChildService = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NOTIFY_SOCKET")) || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LISTEN_PID"));
 
