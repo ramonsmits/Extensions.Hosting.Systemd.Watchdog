@@ -45,6 +45,7 @@ namespace Microsoft.Extensions.Hosting
 
         public static IServiceCollection AddSystemd(this IServiceCollection services, bool enableWatchdog)
         {
+            SystemdHostBuilderExtensions.AddSystemd(services);
             var isSystemdService = SystemdHelpers.IsSystemdService();
             var isSystemdChildService = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NOTIFY_SOCKET")) || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LISTEN_PID"));
 
