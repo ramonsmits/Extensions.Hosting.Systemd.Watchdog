@@ -2,13 +2,13 @@
 using Microsoft.Extensions.Options;
 using System.Threading;
 
-class ActivityMonitor : IHealthCheck
+class ActivityMonitor : IWatchdogCheck
 {
     readonly CancellationTokenSource Cts;
     readonly CancellationToken Ct;
     readonly ILogger Log;
 
-    bool IHealthCheck.IsHealthy
+    bool IWatchdogCheck.IsHealthy
     {
         get
         {

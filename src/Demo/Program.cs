@@ -9,7 +9,7 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.UseSystemd();
 builder.Services
     .AddHostedService<Worker>()
-    .AddSingleton<IHealthCheck, ActivityMonitor>();
+    .AddSingleton<IWatchdogCheck, ActivityMonitor>();
 
 #else
 var builder = Host.CreateDefaultBuilder(args)
@@ -17,7 +17,7 @@ var builder = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.AddHostedService<Worker>();
-        services.AddSingleton<IHealthCheck, ActivityMonitor>();
+        services.AddSingleton<IWatchdogCheck, ActivityMonitor>();
     });
 #endif
 
