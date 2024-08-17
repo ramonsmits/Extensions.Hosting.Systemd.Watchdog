@@ -11,20 +11,20 @@ class WatchdogService : IHostedService, IDisposable
 {
     static readonly ServiceState WatchDogState = new("WATCHDOG=1");
     readonly ISystemdNotifier SystemdNotifier;
-    readonly IHealthCheck[] HealthChecks;
+    readonly IWatchdogCheck[] Checks;
     readonly Timer watchdogTimer;
     readonly TimeSpan Interval;
     readonly ILogger Logger;
 
     const long WatchdogFrequency = 1000000L;
 
-    public WatchdogService(ILogger<WatchdogService> logger, ISystemdNotifier systemdNotifier, IEnumerable<IHealthCheck> healthChecks)
+    public WatchdogService(ILogger<WatchdogService> logger, ISystemdNotifier systemdNotifier, IEnumerable<IWatchdogCheck> healthChecks)
     {
         Logger = logger;
-        HealthChecks = healthChecks.ToArray();
+        Checks = healthChecks.ToArray();
         SystemdNotifier = systemdNotifier;
 
-        if (HealthChecks.Length == 0) throw new InvalidOperationException($"Atleast one `{nameof(IHealthCheck)}` needs to be registered.");
+        if (Checks.Length == 0) throw new InvalidOperationException($"Atleast one `{nameof(IWatchdogCheck)}` needs to be registered.");
 
         var WATCHDOG_USEC = Environment.GetEnvironmentVariable("WATCHDOG_USEC");
 
@@ -42,7 +42,7 @@ class WatchdogService : IHostedService, IDisposable
 
         watchdogTimer = new Timer(x =>
         {
-            var allHealthy = HealthChecks.All(y => y.IsHealthy);
+            var allHealthy = Checks.All(y => y.IsHealthy);
             if (allHealthy) SystemdNotifier.Notify(WatchDogState);
         });
     }
